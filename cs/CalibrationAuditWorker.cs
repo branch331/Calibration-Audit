@@ -4,15 +4,15 @@ using System.Linq;
 using System.Windows;
 using NationalInstruments.SystemConfiguration;
 
-namespace NationalInstruments.Examples.ShowAllHardware
+namespace NationalInstruments.Examples.CalibrationAudit
 {
-    class ShowHardwareWorker : INotifyPropertyChanged
+    class CalibrationAuditWorker : INotifyPropertyChanged
     {
         private bool canBeginShowHardware;
         private bool shouldShowNetworkDevices;
         private List<HardwareViewModel> allHardwareResources;
 
-        public ShowHardwareWorker()
+        public CalibrationAuditWorker()
         {
             CanBeginShowHardware = true;
         }

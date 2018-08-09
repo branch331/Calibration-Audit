@@ -1,11 +1,11 @@
-﻿ShowAllHardware
+﻿CalibrationAudit
 
 
 winexe
 C#
 .cs
 C:\Users\brand\Documents\GitHub\Calibration-Audit\cs\obj\Debug\
-NationalInstruments.Examples.ShowAllHardware
+NationalInstruments.Examples.CalibrationAudit
 none
 false
 TRACE;DEBUG;NETFX4_0
