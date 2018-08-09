@@ -5,7 +5,7 @@ namespace NationalInstruments.Examples.CalibrationAudit
     class HardwareViewModel
     {
         public HardwareViewModel(ProductResource product)
-        { //switch form HardwareResrouce to ProductResource *******
+        { 
             UserAlias = product.UserAlias;
             NumberOfExperts = product.Experts.Count;
             Expert0ResourceName = product.Experts[0].ResourceName;
@@ -25,9 +25,8 @@ namespace NationalInstruments.Examples.CalibrationAudit
                 ExtLastCalDate = productResource.ExternalCalibrationDate.ToString();
                 ExtLastCalTemp = productResource.ExternalCalibrationTemperature.ToString();
                 RecommendedNextCal = productResource.ExternalCalibrationDueDate.ToString();
-                //Temperature = productResource.
+                //Temperature = productResource.Temperature
                 /*
-                Temperature
                 Error
                 */
             }

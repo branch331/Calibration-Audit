@@ -16,7 +16,7 @@ namespace NationalInstruments.Examples.CalibrationAudit
 
         private void OnRunAuditClick(object sender, RoutedEventArgs e)
         {
-            worker.StartShowHardware(passwordBox.Password);
+            worker.StartRunAudit(passwordBox.Password);
         }
 
     }

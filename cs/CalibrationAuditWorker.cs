@@ -8,26 +8,26 @@ namespace NationalInstruments.Examples.CalibrationAudit
 {
     class CalibrationAuditWorker : INotifyPropertyChanged
     {
-        private bool canBeginShowHardware;
+        private bool canBeginRunAudit;
         private bool shouldShowNetworkDevices;
         private List<HardwareViewModel> allHardwareResources;
 
         public CalibrationAuditWorker()
         {
-            CanBeginShowHardware = true;
+            CanBeginRunAudit = true;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public bool CanBeginShowHardware
+        public bool CanBeginRunAudit
         {
-            get { return canBeginShowHardware; }
+            get { return canBeginRunAudit; }
             set
             {
-                if (canBeginShowHardware != value)
+                if (canBeginRunAudit != value)
                 {
-                    canBeginShowHardware = value;
-                    NotifyPropertyChanged("CanBeginShowHardware");
+                    canBeginRunAudit = value;
+                    NotifyPropertyChanged("CanBeginRunAudit");
                 }
             }
         }
@@ -84,13 +84,13 @@ namespace NationalInstruments.Examples.CalibrationAudit
             }
         }
 
-        public void StartShowHardware(string password)
+        public void StartRunAudit(string password)
         {
             BackgroundWorker worker = new BackgroundWorker();
             worker.DoWork += new DoWorkEventHandler(
                 delegate(object o, DoWorkEventArgs args)
                 {
-                    CanBeginShowHardware = false;
+                    CanBeginRunAudit = false;
                     try
                     {
                         // Because the view does not allow modifying resources, there isn't a need to keep
@@ -110,7 +110,7 @@ namespace NationalInstruments.Examples.CalibrationAudit
                     }
                     finally
                     {
-                        CanBeginShowHardware = true;
+                        CanBeginRunAudit = true;
                     }
                 }
             );
