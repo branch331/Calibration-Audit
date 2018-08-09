@@ -1,8 +1,8 @@
-﻿<Window x:Class="NationalInstruments.Examples.ShowAllHardware.MainWindow"
+﻿<Window x:Class="NationalInstruments.Examples.CalibrationAudit.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:local="clr-namespace:NationalInstruments.Examples.ShowAllHardware"
-        Title="Show All Hardware" Height="600" Width="500" Icon="App.ico">
+        xmlns:local="clr-namespace:NationalInstruments.Examples.CalibrationAudit"
+        Title="Show All Hardware" Height="600" Width="800" Icon="App.ico">
     <Window.Resources>
         <local:AliasConverter x:Key="AliasConverter"/>
     </Window.Resources>
@@ -24,7 +24,7 @@
 2. Press <Bold>Show Hardware</Bold>.</TextBlock>
         </Expander>
 
-        <Grid Grid.Row="1" IsEnabled="{Binding CanBeginShowHardware}">
+        <Grid Grid.Row="1" IsEnabled="{Binding CanBeginRunAudit}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -42,9 +42,9 @@
             <PasswordBox Name="passwordBox" Grid.Row="1" Grid.Column="2" Margin="8,0,0,0"/>
         </Grid>
 
-        <Button Grid.Row="2" HorizontalAlignment="Center" Margin="0,20" Content="Run Audit" Height="40" Width="150" IsDefault="True" Click="OnShowHardwareClick" IsEnabled="{Binding CanBeginShowHardware}"/>
+        <Button Grid.Row="2" HorizontalAlignment="Center" Margin="0,20" Content="Run Audit" Height="40" Width="150" IsDefault="True" Click="OnRunAuditClick" IsEnabled="{Binding CanBeginRunAudit}"/>
 
-        <DataGrid Grid.Row="3" ItemsSource="{Binding FilteredHardwareResources}" AutoGenerateColumns="False" IsReadOnly="True" IsEnabled="{Binding CanBeginShowHardware}">
+        <DataGrid Grid.Row="3" ItemsSource="{Binding FilteredHardwareResources}" AutoGenerateColumns="False" IsReadOnly="True" IsEnabled="{Binding CanBeginRunAudit}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Alias\Resource Name" Width="*">
                     <DataGridTextColumn.Binding>
@@ -55,10 +55,17 @@
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Product Name" Width="*" Binding="{Binding ProductName}"/>
+                <DataGridTextColumn Header="Model" Width="*" Binding="{Binding SerialNumber}"/>
                 <DataGridTextColumn Header="Serial Number" Width="*" Binding="{Binding SerialNumber}"/>
+                <DataGridTextColumn Header="Internal Last Cal Date" Width="*" Binding="{Binding IntLastCalDate}"/>
+                <DataGridTextColumn Header="Internal Last Cal Temp (C)" Width="*" Binding="{Binding IntLastCalTemp}"/>
+                <DataGridTextColumn Header="External Last Cal Date" Width="*" Binding="{Binding ExtLastCalDate}"/>
+                <DataGridTextColumn Header="External Last Cal Temp (C)" Width="*" Binding="{Binding ExtLastCalTemp}"/>
+                <DataGridTextColumn Header="Recommended Next Cal" Width="*" Binding="{Binding RecommendedNextCal}"/>
+                <DataGridTextColumn Header="Current Temperature" Width="*" Binding="{Binding Temperature}"/>
+                <DataGridTextColumn Header="Error" Width="*" Binding="{Binding Error}"/>
             </DataGrid.Columns>
         </DataGrid>
 
-        <CheckBox Grid.Row="4" Content="Show all network devices" IsChecked="{Binding ShouldShowNetworkDevices}" Margin="0,10,0,0" IsEnabled="{Binding CanBeginShowHardware}"/>
     </Grid>
 </Window>

@@ -1,0 +1,9 @@
+8/8/18:
+
+updating Hardwareviewmodel; changed from hardwareresrouce => productresource
+UI can't fit all headers well, not sure how much to change it
+
+Next Steps:
+*Looking for temperature reading property... escalate
+need to implement filter/logic for internal/ext cal data to be shown
+edit worker.cs
