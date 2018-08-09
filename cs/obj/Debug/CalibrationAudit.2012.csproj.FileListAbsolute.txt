@@ -11,3 +11,5 @@ C:\Users\brand\Documents\GitHub\Calibration-Audit\cs\obj\Debug\MainWindow.baml
 C:\Users\brand\Documents\GitHub\Calibration-Audit\cs\obj\Debug\CalibrationAudit.g.resources
 C:\Users\brand\Documents\GitHub\Calibration-Audit\cs\obj\Debug\CalibrationAudit.exe
 C:\Users\brand\Documents\GitHub\Calibration-Audit\cs\obj\Debug\CalibrationAudit.pdb
+C:\Users\bnguyen\Documents\GitHub\Calibration-Audit\cs\bin\Debug\CalibrationAudit.exe.config
+C:\Users\bnguyen\Documents\GitHub\Calibration-Audit\cs\obj\Debug\CalibrationAudit.exe

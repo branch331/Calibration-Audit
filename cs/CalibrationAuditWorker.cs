@@ -32,19 +32,6 @@ namespace NationalInstruments.Examples.CalibrationAudit
             }
         }
 
-        public bool ShouldShowNetworkDevices
-        {
-            get { return shouldShowNetworkDevices; }
-            set
-            {
-                if (shouldShowNetworkDevices != value)
-                {
-                    shouldShowNetworkDevices = value;
-                    NotifyPropertyChanged("FilteredHardwareResources");
-                }
-            }
-        }
-
         public string Target
         {
             get;
@@ -66,7 +53,7 @@ namespace NationalInstruments.Examples.CalibrationAudit
                     return Enumerable.Empty<HardwareViewModel>();
                 }
                 return from resource in AllHardwareResources
-                       where ShouldShowNetworkDevices || !(resource.NumberOfExperts == 1 && resource.Expert0ProgrammaticName.Equals("network"))
+                       where !(resource.NumberOfExperts == 1 && resource.Expert0ProgrammaticName.Equals("network"))
                        select resource;
             }
         }
@@ -97,10 +84,16 @@ namespace NationalInstruments.Examples.CalibrationAudit
                         // the raw HardwareResourceBase objects after creating the view models.
                         AllHardwareResources = null;
                         var session = new SystemConfiguration.SystemConfiguration(Target, Username, password);
-                        SystemConfiguration.Filter filter = new SystemConfiguration.Filter(session); //add a filter
-                        ResourceCollection rawResources = session.FindHardware(filter, "xnet"); //filter out only xnet devices
+
+                        SystemConfiguration.Filter filter = new SystemConfiguration.Filter(session); 
+                        filter.IsDevice = true;
+                        filter.SupportsCalibration = true;
+                        filter.IsPresent = SystemConfiguration.IsPresentType.Present;
+                        filter.IsSimulated = false;
+
+                        ResourceCollection rawResources = session.FindHardware(filter); 
                         AllHardwareResources =
-                            (from resource in rawResources
+                            (from resource in rawResources //issue is that this returns hardwareresourcebase but in hardwareviewmodel we have productresource class
                              select new HardwareViewModel(resource)).ToList();
                     }
                     catch (SystemConfigurationException ex)

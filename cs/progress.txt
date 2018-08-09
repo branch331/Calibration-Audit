@@ -7,3 +7,7 @@ Next Steps:
 *Looking for temperature reading property... escalate
 need to implement filter/logic for internal/ext cal data to be shown
 edit worker.cs
+
+8/9/18:
+working on Filter in worker.cs
+issue is that FindHardware returns hardwareresourcebase but in hardwareviewmodel we have productresource class
