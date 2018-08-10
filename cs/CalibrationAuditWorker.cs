@@ -88,7 +88,7 @@ namespace NationalInstruments.Examples.CalibrationAudit
                         filter.IsDevice = true;
                         filter.SupportsCalibration = true;
                         filter.IsPresent = SystemConfiguration.IsPresentType.Present;
-                        filter.IsSimulated = true; //FOR TESTING
+                        filter.IsSimulated = false; 
 
                         ResourceCollection rawResources = session.FindHardware(filter); 
 

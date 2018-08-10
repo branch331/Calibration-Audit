@@ -20,7 +20,11 @@ simulated device needed for testing. program runs fine but nothing to test with
 
 added internal/external support if statements (HardwareViewModel line 22, 28)
 
+in hardwareviewmodel, if the prop doesnt exist or whatever it won't display anything on table
+	maybe this is only for simulated devices...?
+
 Next Steps:
 -Confirm if temperature property exists or not
 -make field red if calibration date is overdue
 -test w/ hardware (simulated or not). Change back 'IsSimulated' property to False for filter
+-fix hardwareviewmodel (test w/ real HW first)

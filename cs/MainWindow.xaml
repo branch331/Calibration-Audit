@@ -46,7 +46,7 @@
 
         <DataGrid Grid.Row="3" ItemsSource="{Binding FilteredHardwareResources}" AutoGenerateColumns="False" IsReadOnly="True" IsEnabled="{Binding CanBeginRunAudit}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Alias\Resource Name" Width="*">
+                <DataGridTextColumn Header="Device" Width="*">
                     <DataGridTextColumn.Binding>
                         <MultiBinding Converter="{StaticResource AliasConverter}">
                             <Binding Path="UserAlias"/>
@@ -54,8 +54,7 @@
                         </MultiBinding>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Product Name" Width="*" Binding="{Binding ProductName}"/>
-                <DataGridTextColumn Header="Model" Width="*" Binding="{Binding SerialNumber}"/>
+                <DataGridTextColumn Header="Model" Width="*" Binding="{Binding Model}"/>
                 <DataGridTextColumn Header="Serial Number" Width="*" Binding="{Binding SerialNumber}"/>
                 <DataGridTextColumn Header="Internal Last Cal Date" Width="*" Binding="{Binding IntLastCalDate}"/>
                 <DataGridTextColumn Header="Internal Last Cal Temp (C)" Width="*" Binding="{Binding IntLastCalTemp}"/>
