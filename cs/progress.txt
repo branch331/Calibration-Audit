@@ -23,3 +23,4 @@ added internal/external support if statements (HardwareViewModel line 22, 28)
 Next Steps:
 -Confirm if temperature property exists or not
 -make field red if calibration date is overdue
+-test w/ hardware (simulated or not). Change back 'IsSimulated' property to False for filter
