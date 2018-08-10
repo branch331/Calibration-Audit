@@ -4,27 +4,34 @@ namespace NationalInstruments.Examples.CalibrationAudit
 {
     class HardwareViewModel
     {
-        public HardwareViewModel(ProductResource product)
+        public HardwareViewModel(HardwareResourceBase resource)
         { 
-            UserAlias = product.UserAlias;
-            NumberOfExperts = product.Experts.Count;
-            Expert0ResourceName = product.Experts[0].ResourceName;
-            Expert0ProgrammaticName = product.Experts[0].ExpertProgrammaticName;
+            UserAlias = resource.UserAlias;
+            NumberOfExperts = resource.Experts.Count;
+            Expert0ResourceName = resource.Experts[0].ResourceName;
+            Expert0ProgrammaticName = resource.Experts[0].ExpertProgrammaticName;
 
-            ProductResource productResource = product as ProductResource;
+            ProductResource productResource = resource as ProductResource; //Cast hardwareresourcebase to productresource
 
             if (productResource != null)
             {
-                ProductName = product.ProductName;
-                Model = product.ModelNameNumber.ToString();
-                SerialNumber = product.SerialNumber;
+                ProductName = productResource.ProductName;
+                Model = productResource.ModelNameNumber.ToString();
+                SerialNumber = productResource.SerialNumber;
                 
-                //Needs filter logic here for calibration support
-                IntLastCalDate = productResource.InternalCalibrationDate.ToString();
-                IntLastCalTemp = productResource.InternalCalibrationTemperature.ToString(); //Celsius
-                ExtLastCalDate = productResource.ExternalCalibrationDate.ToString();
-                ExtLastCalTemp = productResource.ExternalCalibrationTemperature.ToString();
-                RecommendedNextCal = productResource.ExternalCalibrationDueDate.ToString();
+                if (productResource.SupportsInternalCalibration)
+                {
+                    IntLastCalDate = productResource.InternalCalibrationDate.ToString();
+                    IntLastCalTemp = productResource.InternalCalibrationTemperature.ToString(); //Celsius
+                }
+
+                if (productResource.SupportsExternalCalibration)
+                {
+                    ExtLastCalDate = productResource.ExternalCalibrationDate.ToString();
+                    ExtLastCalTemp = productResource.ExternalCalibrationTemperature.ToString();
+                    RecommendedNextCal = productResource.ExternalCalibrationDueDate.ToString(); 
+                    //If recommendedNExtCal date is overdue, make field red
+                }
                 //Temperature = productResource.Temperature
                 /*
                 Error

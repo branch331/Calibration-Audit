@@ -9,7 +9,6 @@ namespace NationalInstruments.Examples.CalibrationAudit
     class CalibrationAuditWorker : INotifyPropertyChanged
     {
         private bool canBeginRunAudit;
-        private bool shouldShowNetworkDevices;
         private List<HardwareViewModel> allHardwareResources;
 
         public CalibrationAuditWorker()
@@ -89,11 +88,12 @@ namespace NationalInstruments.Examples.CalibrationAudit
                         filter.IsDevice = true;
                         filter.SupportsCalibration = true;
                         filter.IsPresent = SystemConfiguration.IsPresentType.Present;
-                        filter.IsSimulated = false;
+                        filter.IsSimulated = true; //FOR TESTING
 
                         ResourceCollection rawResources = session.FindHardware(filter); 
+
                         AllHardwareResources =
-                            (from resource in rawResources //issue is that this returns hardwareresourcebase but in hardwareviewmodel we have productresource class
+                            (from resource in rawResources 
                              select new HardwareViewModel(resource)).ToList();
                     }
                     catch (SystemConfigurationException ex)

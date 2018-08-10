@@ -11,3 +11,15 @@ edit worker.cs
 8/9/18:
 working on Filter in worker.cs
 issue is that FindHardware returns hardwareresourcebase but in hardwareviewmodel we have productresource class
+
+Looks like product resource inherits from hardwareresourcebase >> hardwareresource >> productresourcebase >> productresource
+
+Tried casting (Line 14 of HardwareViewModel: ProductResource productResource = resource as ProductResource;) maybe? no errors
+
+simulated device needed for testing. program runs fine but nothing to test with
+
+added internal/external support if statements (HardwareViewModel line 22, 28)
+
+Next Steps:
+-Confirm if temperature property exists or not
+-make field red if calibration date is overdue
