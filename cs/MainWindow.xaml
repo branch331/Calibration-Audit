@@ -17,11 +17,11 @@
         </Grid.RowDefinitions>
 
         <Expander Grid.Row="0" Header="Operating Instructions" IsExpanded="True" Margin="0,0,0,20">
-            <TextBlock xml:space="preserve" TextWrapping="Wrap" Padding="10,4,0,0"><Bold>Overview:</Bold> Displays all hardware and certain properties of that hardware on the specified target. The target can be left empty for localhost.
+            <TextBlock xml:space="preserve" TextWrapping="Wrap" Padding="10,4,0,0"><Bold>Overview:</Bold> Obtains calibration information for the hardware on a selected target. The target can be left empty for localhost.
 <Bold>Requirements:</Bold> NI System Configuration, applicable device drivers
 <Bold>Instructions:</Bold>
 1. Enter the <Bold>Target</Bold>. Enter the <Bold>User Name</Bold> and <Bold>Password</Bold> if necessary.
-2. Press <Bold>Show Hardware</Bold>.</TextBlock>
+2. Press <Bold>Run Audit</Bold>.</TextBlock>
         </Expander>
 
         <Grid Grid.Row="1" IsEnabled="{Binding CanBeginRunAudit}">
