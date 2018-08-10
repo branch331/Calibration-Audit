@@ -11,60 +11,65 @@ namespace NationalInstruments.Examples.CalibrationAudit
             Expert0ResourceName = resource.Experts[0].ResourceName;
             Expert0ProgrammaticName = resource.Experts[0].ExpertProgrammaticName;
 
-            ProductResource productResource = resource as ProductResource; //Cast hardwareresourcebase to productresource
+            ProductResource productResource = resource as ProductResource; 
+
 
             if (productResource != null)
             {
-                Model = productResource.ProductName;
-                SerialNumber = productResource.SerialNumber;
-                
-                //IntLastCalDate = productResource.HardwareRevision.ToString(); //using prop in productResourceBase doesn't break it
-                //IntLastCalDate = productResource.IsChassis.ToString(); //using prop in productResourceBase class is fine
-                //IntLastCalDate = productResource.IsSimulated.ToString(); //using IsSimulated prop works just fine... so not a class issue
-                
-                //why doesn't this work:
-                if (productResource.SupportsInternalCalibration)
+                try
                 {
-                    IntLastCalDate = productResource.InternalCalibrationDate.ToString();
-                    IntLastCalTemp = productResource.InternalCalibrationTemperature.ToString(); //Celsius
+                    Model = productResource.ProductName;
+                    SerialNumber = productResource.SerialNumber;
+
+                    if (productResource.SupportsInternalCalibration)
+                    {
+                        IntLastCalDate = productResource.InternalCalibrationDate.ToString("MM-dd-yyyy");
+                        IntLastCalTemp = productResource.InternalCalibrationTemperature.ToString();
+                    }
+                    else
+                    {
+                        IntLastCalDate = "";
+                    }
+
+                    if (productResource.SupportsExternalCalibration)
+                    {
+                        ExtLastCalDate = productResource.ExternalCalibrationDate.ToString("MM-dd-yyyy");
+                        ExtLastCalTemp = productResource.ExternalCalibrationTemperature.ToString();
+                        RecommendedNextCal = productResource.ExternalCalibrationDueDate.ToString("MM-dd-yyyy"); 
+
+                        if (System.DateTime.Compare(productResource.ExternalCalibrationDueDate, System.DateTime.Now) < 0)
+                        {
+                            CalibrationOverdue = true;
+                        }
+                        else
+                        {
+                            CalibrationOverdue = false;
+                        }
+
+                    }
+                    else
+                    {
+                        ExtLastCalDate = "";
+                        ExtLastCalTemp = "";
+                        RecommendedNextCal = "";
+                    }
+
+                    TemperatureSensor[] sensors = productResource.QueryTemperatureSensors(SensorInfo.Reading);
+
+                    try
+                    {
+                        Temperature = sensors[0].Reading.ToString(); //Sensor 0 is the internal temperature
+                    }
+                    catch
+                    {
+                        Temperature = "";
+                    }
+
                 }
-                else
+                catch (SystemConfigurationException ex)
                 {
-                    IntLastCalDate = "";
-                } 
-                
-                //RecommendedNextCal = productResource.ExternalCalibrationDueDate.ToString();
-                /*
-                if (productResource.SupportsInternalCalibration)
-                {
-                    IntLastCalDate = productResource.InternalCalibrationDate.ToString();
-                    IntLastCalTemp = productResource.InternalCalibrationTemperature.ToString(); //Celsius
+                    Error = ex.ErrorCode.ToString();
                 }
-                else
-                {
-                    IntLastCalDate = "";
-                    IntLastCalTemp = "";
-                }
-                 * */
-                
-                if (productResource.SupportsExternalCalibration)
-                {
-                    ExtLastCalDate = productResource.ExternalCalibrationDate.ToString();
-                    ExtLastCalTemp = productResource.ExternalCalibrationTemperature.ToString();
-                    RecommendedNextCal = productResource.ExternalCalibrationDueDate.ToString();
-                    //If recommendedNExtCal date is overdue, make field red
-                }
-                else
-                {
-                    ExtLastCalDate = "";
-                    ExtLastCalTemp = "";
-                    RecommendedNextCal = "";
-                }
-                 
-                //Temperature = productResource.Temperature
-                /*
-                Error
-                */
             }
         }
 
@@ -135,6 +140,12 @@ namespace NationalInstruments.Examples.CalibrationAudit
         }
 
         public string Error
+        {
+            get;
+            private set;
+        }
+
+        public bool CalibrationOverdue
         {
             get;
             private set;

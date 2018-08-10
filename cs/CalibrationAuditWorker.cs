@@ -98,8 +98,11 @@ namespace NationalInstruments.Examples.CalibrationAudit
                     }
                     catch (SystemConfigurationException ex)
                     {
-                        string errorMessage = string.Format("Find Hardware threw a System Configuration Exception.\n\nErrorCode: {0:X}\n{1}", ex.ErrorCode, ex.Message);
-                        MessageBox.Show(errorMessage, "System Configuration Exception");
+                        if (ex.ErrorCode.ToString() != "-2147220623") //Do not report error if device does not support self calibration (-2147220623)
+                        {
+                            string errorMessage = string.Format("Find Hardware threw a System Configuration Exception.\n\nErrorCode: {0:X}\n{1}", ex.ErrorCode, ex.Message);
+                            MessageBox.Show(errorMessage, "System Configuration Exception");
+                        }
                     }
                     finally
                     {
