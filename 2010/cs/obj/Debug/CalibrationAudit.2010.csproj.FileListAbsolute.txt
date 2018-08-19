@@ -10,3 +10,4 @@ C:\Users\brand\Documents\GitHub\Calibration-Audit\2010\cs\obj\Debug\CalibrationA
 C:\Users\brand\Documents\GitHub\Calibration-Audit\2010\cs\obj\Debug\CalibrationAudit_MarkupCompile.lref
 C:\Users\brand\Documents\GitHub\Calibration-Audit\2010\cs\obj\Debug\MainWindow.baml
 C:\Users\brand\Documents\GitHub\Calibration-Audit\2010\cs\obj\Debug\CalibrationAudit.g.resources
+C:\Users\brand\Documents\GitHub\Calibration-Audit\2010\cs\obj\Debug\CalibrationAudit.2010.csprojResolveAssemblyReference.cache

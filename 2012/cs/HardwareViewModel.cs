@@ -29,6 +29,7 @@ namespace NationalInstruments.Examples.CalibrationAudit
                     else
                     {
                         IntLastCalDate = "";
+                        IntLastCalTemp = "";
                     }
 
                     if (productResource.SupportsExternalCalibration)
@@ -54,10 +55,9 @@ namespace NationalInstruments.Examples.CalibrationAudit
                         RecommendedNextCal = "";
                     }
 
-                    TemperatureSensor[] sensors = productResource.QueryTemperatureSensors(SensorInfo.Reading);
-
                     try
                     {
+                        TemperatureSensor[] sensors = productResource.QueryTemperatureSensors(SensorInfo.Reading);
                         Temperature = sensors[0].Reading.ToString(); //Sensor 0 is the internal temperature
                     }
                     catch
