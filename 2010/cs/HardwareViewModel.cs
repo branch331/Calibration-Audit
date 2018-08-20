@@ -24,7 +24,7 @@ namespace NationalInstruments.Examples.CalibrationAudit
                     if (productResource.SupportsInternalCalibration)
                     {
                         IntLastCalDate = productResource.InternalCalibrationDate.ToString("MM-dd-yyyy");
-                        IntLastCalTemp = productResource.InternalCalibrationTemperature.ToString();
+                        IntLastCalTemp = productResource.InternalCalibrationTemperature.ToString("0.00");
                     }
                     else
                     {
@@ -35,7 +35,7 @@ namespace NationalInstruments.Examples.CalibrationAudit
                     if (productResource.SupportsExternalCalibration)
                     {
                         ExtLastCalDate = productResource.ExternalCalibrationDate.ToString("MM-dd-yyyy");
-                        ExtLastCalTemp = productResource.ExternalCalibrationTemperature.ToString();
+                        ExtLastCalTemp = productResource.ExternalCalibrationTemperature.ToString("0.00");
                         RecommendedNextCal = productResource.ExternalCalibrationDueDate.ToString("MM-dd-yyyy"); 
 
                         if (System.DateTime.Compare(productResource.ExternalCalibrationDueDate, System.DateTime.Now) < 0)
@@ -58,7 +58,7 @@ namespace NationalInstruments.Examples.CalibrationAudit
                     try
                     {
                         TemperatureSensor[] sensors = productResource.QueryTemperatureSensors(SensorInfo.Reading);
-                        Temperature = sensors[0].Reading.ToString(); //Sensor 0 is the internal temperature
+                        Temperature = sensors[0].Reading.ToString("0.00"); //Sensor 0 is the internal temperature
                     }
                     catch
                     {

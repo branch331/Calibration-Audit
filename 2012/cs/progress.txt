@@ -48,7 +48,10 @@ Next Steps:
 -test w/ test plan (both 2012 & 2010)
 -remove comments/debugging parts of code
 
-
+8/20/18:
+-works w/ actual hw still
+-testing 2010/2012
+-changed temperature string formats
 
 
 
