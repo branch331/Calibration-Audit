@@ -1,12 +1,11 @@
-Show All Hardware Example
+Calibration Audit Example
 
-Overview:
-This example demonstrates how to get all the hardware for a target with System Configuration installed along with how to display properties about resources on the target.
+Overview: 
+Obtains calibration information for the hardware on a selected target. The target can be left empty for localhost.
 
-Requirements:
+Requirements: 
 NI System Configuration, applicable device drivers
 
 Instructions:
-1. Run the example.
-2. Enter the target and the user name and password, if necessary.
-3. Press "Show Hardware".
+1. Enter the Target. Enter the User Name and Password if necessary.
+2. Click "Run Audit".
