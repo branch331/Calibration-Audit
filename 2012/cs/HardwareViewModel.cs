@@ -20,24 +20,41 @@ namespace NationalInstruments.Examples.CalibrationAudit
                 {
                     Model = productResource.ProductName;
                     SerialNumber = productResource.SerialNumber;
+                    //model & serial num good
 
+                    //THIS SECTION NOT GOOD ------------------------
                     if (productResource.SupportsInternalCalibration)
                     {
+                        
                         IntLastCalDate = productResource.InternalCalibrationDate.ToString("MM-dd-yyyy");
                         IntLastCalTemp = productResource.InternalCalibrationTemperature.ToString("0.00");
                     }
+                
                     else
                     {
                         IntLastCalDate = "";
                         IntLastCalTemp = "";
                     }
+                    //--------------------------------
 
-                    if (productResource.SupportsExternalCalibration)
+                    ExtLastCalDate = "ext cal date";
+                    ExtLastCalTemp = "ext cal temp";
+                    RecommendedNextCal = "next cal";
+
+                    /*if (productResource.SupportsExternalCalibration)
                     {
+                        /*
                         ExtLastCalDate = productResource.ExternalCalibrationDate.ToString("MM-dd-yyyy");
                         ExtLastCalTemp = productResource.ExternalCalibrationTemperature.ToString("0.00");
                         RecommendedNextCal = productResource.ExternalCalibrationDueDate.ToString("MM-dd-yyyy"); 
+                        */
 
+                    /*
+                        ExtLastCalDate = "ext cal date";
+                        ExtLastCalTemp = "ext cal temp";
+                        RecommendedNextCal = "next cal";
+                    */
+                    /*
                         if (System.DateTime.Compare(productResource.ExternalCalibrationDueDate, System.DateTime.Now) < 0)
                         {
                             CalibrationOverdue = true;
@@ -46,7 +63,9 @@ namespace NationalInstruments.Examples.CalibrationAudit
                         {
                             CalibrationOverdue = false;
                         }
+                    */
 
+                    /*
                     }
                     else
                     {
@@ -54,7 +73,7 @@ namespace NationalInstruments.Examples.CalibrationAudit
                         ExtLastCalTemp = "";
                         RecommendedNextCal = "";
                     }
-
+                    */
                     try
                     {
                         TemperatureSensor[] sensors = productResource.QueryTemperatureSensors(SensorInfo.Reading);
