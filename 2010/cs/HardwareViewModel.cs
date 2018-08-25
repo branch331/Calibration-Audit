@@ -47,15 +47,7 @@ namespace NationalInstruments.Examples.CalibrationAudit
                             ExtLastCalDate = productResource.ExternalCalibrationDate.ToString("MM-dd-yyyy");
                             ExtLastCalTemp = productResource.ExternalCalibrationTemperature.ToString("0.00");
                             RecommendedNextCal = productResource.ExternalCalibrationDueDate.ToString("MM-dd-yyyy");
-                        }
-                        catch
-                        {
-                            ExtLastCalDate = "N/A";
-                            ExtLastCalTemp = "N/A";
-                            RecommendedNextCal = "N/A";
-                        }
-                        try
-                        {
+
                             if (System.DateTime.Compare(productResource.ExternalCalibrationDueDate, System.DateTime.Now) < 0)
                             {
                                 CalibrationOverdue = true;
@@ -67,6 +59,9 @@ namespace NationalInstruments.Examples.CalibrationAudit
                         }
                         catch
                         {
+                            ExtLastCalDate = "N/A";
+                            ExtLastCalTemp = "N/A";
+                            RecommendedNextCal = "N/A";
                             CalibrationOverdue = false;
                         }
                     }
