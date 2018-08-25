@@ -20,60 +20,63 @@ namespace NationalInstruments.Examples.CalibrationAudit
                 {
                     Model = productResource.ProductName;
                     SerialNumber = productResource.SerialNumber;
-                    //model & serial num good
 
-                    //THIS SECTION NOT GOOD ------------------------
                     if (productResource.SupportsInternalCalibration)
                     {
-                        
-                        IntLastCalDate = productResource.InternalCalibrationDate.ToString("MM-dd-yyyy");
-                        IntLastCalTemp = productResource.InternalCalibrationTemperature.ToString("0.00");
+                        try
+                        {
+                            IntLastCalDate = productResource.InternalCalibrationDate.ToString("MM-dd-yyyy");
+                            IntLastCalTemp = productResource.InternalCalibrationTemperature.ToString("0.00");
+                        }
+                        catch
+                        {
+                            IntLastCalDate = "N/A";
+                            IntLastCalTemp = "N/A";
+                        }
                     }
-                
                     else
                     {
-                        IntLastCalDate = "";
-                        IntLastCalTemp = "";
+                        IntLastCalDate = "N/A";
+                        IntLastCalTemp = "N/A";
                     }
-                    //--------------------------------
 
-                    ExtLastCalDate = "ext cal date";
-                    ExtLastCalTemp = "ext cal temp";
-                    RecommendedNextCal = "next cal";
-
-                    /*if (productResource.SupportsExternalCalibration)
+                    if (productResource.SupportsExternalCalibration)
                     {
-                        /*
-                        ExtLastCalDate = productResource.ExternalCalibrationDate.ToString("MM-dd-yyyy");
-                        ExtLastCalTemp = productResource.ExternalCalibrationTemperature.ToString("0.00");
-                        RecommendedNextCal = productResource.ExternalCalibrationDueDate.ToString("MM-dd-yyyy"); 
-                        */
-
-                    /*
-                        ExtLastCalDate = "ext cal date";
-                        ExtLastCalTemp = "ext cal temp";
-                        RecommendedNextCal = "next cal";
-                    */
-                    /*
-                        if (System.DateTime.Compare(productResource.ExternalCalibrationDueDate, System.DateTime.Now) < 0)
+                        try
                         {
-                            CalibrationOverdue = true;
+                            ExtLastCalDate = productResource.ExternalCalibrationDate.ToString("MM-dd-yyyy");
+                            ExtLastCalTemp = productResource.ExternalCalibrationTemperature.ToString("0.00");
+                            RecommendedNextCal = productResource.ExternalCalibrationDueDate.ToString("MM-dd-yyyy");
                         }
-                        else
+                        catch
+                        {
+                            ExtLastCalDate = "N/A";
+                            ExtLastCalTemp = "N/A";
+                            RecommendedNextCal = "N/A";
+                        }
+                        try
+                        {
+                            if (System.DateTime.Compare(productResource.ExternalCalibrationDueDate, System.DateTime.Now) < 0)
+                            {
+                                CalibrationOverdue = true;
+                            }
+                            else
+                            {
+                                CalibrationOverdue = false;
+                            }
+                        }
+                        catch
                         {
                             CalibrationOverdue = false;
                         }
-                    */
-
-                    /*
                     }
                     else
                     {
-                        ExtLastCalDate = "";
-                        ExtLastCalTemp = "";
-                        RecommendedNextCal = "";
+                        ExtLastCalDate = "N/A";
+                        ExtLastCalTemp = "N/A";
+                        RecommendedNextCal = "N/A";
                     }
-                    */
+                    
                     try
                     {
                         TemperatureSensor[] sensors = productResource.QueryTemperatureSensors(SensorInfo.Reading);
@@ -81,7 +84,7 @@ namespace NationalInstruments.Examples.CalibrationAudit
                     }
                     catch
                     {
-                        Temperature = "";
+                        Temperature = "N/A";
                     }
 
                 }
