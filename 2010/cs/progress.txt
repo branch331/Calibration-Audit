@@ -45,10 +45,13 @@ Seems to be working w/ real hardware
 -Change recommended last cal dates, and rec next cal dates to ignore hour/min value to shorten space on UI
 
 Next Steps:
--test w/ test plan
+-test w/ test plan (both 2012 & 2010)
 -remove comments/debugging parts of code
 
-
+8/20/18:
+-works w/ actual hw still
+-testing 2010/2012
+-changed temperature string formats
 
 
 
