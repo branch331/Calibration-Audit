@@ -84,10 +84,10 @@ namespace NationalInstruments.Examples.CalibrationAudit
                         AllHardwareResources = null;
                         var session = new SystemConfiguration.SystemConfiguration(Target, Username, password);
 
-                        SystemConfiguration.Filter filter = new SystemConfiguration.Filter(session); 
+                        Filter filter = new Filter(session); 
                         filter.IsDevice = true;
                         filter.SupportsCalibration = true;
-                        filter.IsPresent = SystemConfiguration.IsPresentType.Present;
+                        filter.IsPresent = IsPresentType.Present;
                         filter.IsSimulated = false;  
 
                         ResourceCollection rawResources = session.FindHardware(filter); 
