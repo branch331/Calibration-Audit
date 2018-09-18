@@ -18,75 +18,30 @@ namespace NationalInstruments.Examples.CalibrationAudit
             {
                 try
                 {
-                    Model = productResource.ProductName;
-                    SerialNumber = productResource.SerialNumber;
+                    CalibrationOverdue = false;
+                    Model = ReturnProperty(productResource.ProductName);
+                    SerialNumber = ReturnProperty(productResource.SerialNumber);
 
                     if (productResource.SupportsInternalCalibration)
                     {
-                        try
-                        {
-                            IntLastCalDate = productResource.InternalCalibrationDate.ToString("MM-dd-yyyy");
-                            IntLastCalTemp = productResource.InternalCalibrationTemperature.ToString("0.00");
-                        }
-                        catch
-                        {
-                            IntLastCalDate = "N/A";
-                            IntLastCalTemp = "N/A";
-                        }
-                    }
-                    else
-                    {
-                        IntLastCalDate = "N/A";
-                        IntLastCalTemp = "N/A";
+                        IntLastCalDate = ReturnProperty(productResource.InternalCalibrationDate.ToString("MM-dd-yyyy"));
+                        IntLastCalTemp = ReturnProperty(productResource.InternalCalibrationTemperature.ToString("0.00"));
                     }
 
                     if (productResource.SupportsExternalCalibration)
                     {
-                        CalibrationOverdue = false;
+                        ExtLastCalDate = ReturnProperty(productResource.ExternalCalibrationDate.ToString("MM-dd-yyyy"));
+                        ExtLastCalTemp = ReturnProperty(productResource.ExternalCalibrationTemperature.ToString("0.00"));
+                        RecommendedNextCal = ReturnProperty(productResource.ExternalCalibrationDueDate.ToString("MM-dd-yyyy"));
+                    }
 
-                        try
-                        {
-                            ExtLastCalDate = productResource.ExternalCalibrationDate.ToString("MM-dd-yyyy");
-
-                        }
-                        catch
-                        {
-                            ExtLastCalDate = "N/A";
-                        }
-
-                        try
-                        {
-                            ExtLastCalTemp = productResource.ExternalCalibrationTemperature.ToString("0.00");
-                        }
-                        catch
-                        {
-                            ExtLastCalTemp = "N/A";
-                        }
-
-                        try
-                        {
-                            RecommendedNextCal = productResource.ExternalCalibrationDueDate.ToString("MM-dd-yyyy");
-
-                            if (System.DateTime.Compare(productResource.ExternalCalibrationDueDate, System.DateTime.Now) < 0)
-                            {
-                                CalibrationOverdue = true;
-                            }
-                            else
-                            {
-                                CalibrationOverdue = false;
-                            }
-                        }
-                        catch
-                        {
-                            RecommendedNextCal = "N/A";
-                        }
-
+                    if (System.DateTime.Compare(productResource.ExternalCalibrationDueDate, System.DateTime.Now) < 0)
+                    {
+                        CalibrationOverdue = true;
                     }
                     else
                     {
-                        ExtLastCalDate = "12-31-1903";
-                        ExtLastCalTemp = "N/A";
-                        RecommendedNextCal = "N/A";
+                        CalibrationOverdue = false;
                     }
 
                     try
@@ -105,6 +60,22 @@ namespace NationalInstruments.Examples.CalibrationAudit
                     Error = ex.ErrorCode.ToString();
                 }
             }
+        }
+
+        private string ReturnProperty(string Property)
+        {
+            string property;
+
+            try
+            {
+                property = Property;
+            }
+            catch
+            {
+                property = "N/A";
+            }
+
+            return property;
         }
 
         public string UserAlias
