@@ -16,43 +16,56 @@ namespace NationalInstruments.Examples.CalibrationAudit
 
             if (productResource != null)
             {
-                try 
+                //Use try catch blocks to detect System Configuration exception
+                //If a value is not supported by the device (returns an exception) then "N/A" is returned
+                try
                 {
-                    CalibrationOverdue = false;
-                    Model = ReturnProperty(productResource.ProductName);
-                    SerialNumber = ReturnProperty(productResource.SerialNumber);
+                    Model = productResource.ProductName;
+                    SerialNumber = productResource.SerialNumber;
 
                     if (productResource.SupportsInternalCalibration)
                     {
-                        IntLastCalDate = ReturnProperty(productResource.InternalCalibrationDate.ToString("MM-dd-yyyy"));
-                        IntLastCalTemp = ReturnProperty(productResource.InternalCalibrationTemperature.ToString("0.00"));
+                        ReturnInternalCalData(productResource);
+                    }
+                    else
+                    {
+                        IntLastCalDate = "N/A";
+                        IntLastCalTemp = "N/A";
                     }
 
                     if (productResource.SupportsExternalCalibration)
                     {
-                        ExtLastCalDate = ReturnProperty(productResource.ExternalCalibrationDate.ToString("MM-dd-yyyy"));
-                        ExtLastCalTemp = ReturnProperty(productResource.ExternalCalibrationTemperature.ToString("0.00"));
-                        RecommendedNextCal = ReturnProperty(productResource.ExternalCalibrationDueDate.ToString("MM-dd-yyyy"));
-                    }
+                        CalibrationOverdue = false;
 
-                    if (System.DateTime.Compare(productResource.ExternalCalibrationDueDate, System.DateTime.Now) < 0)
-                    {
-                        CalibrationOverdue = true;
+                        ReturnExternalCalData(productResource);
+
+                        try
+                        {
+                            RecommendedNextCal = productResource.ExternalCalibrationDueDate.ToString("MM-dd-yyyy");
+
+                            if (System.DateTime.Compare(productResource.ExternalCalibrationDueDate, System.DateTime.Now) < 0)
+                            {
+                                CalibrationOverdue = true;
+                            }
+                            else
+                            {
+                                CalibrationOverdue = false;
+                            }
+                        }
+                        catch
+                        {
+                            RecommendedNextCal = "N/A";
+                        }
+
                     }
                     else
                     {
-                        CalibrationOverdue = false;
+                        ExtLastCalDate = "N/A"; 
+                        ExtLastCalTemp = "N/A";
+                        RecommendedNextCal = "N/A";
                     }
 
-                    try
-                    {
-                        TemperatureSensor[] sensors = productResource.QueryTemperatureSensors(SensorInfo.Reading);
-                        Temperature = sensors[0].Reading.ToString("0.00"); //Sensor 0 is the internal temperature
-                    }
-                    catch
-                    {
-                        Temperature = "N/A";
-                    }
+                    ReturnTemperatureData(productResource);
 
                 }
                 catch (SystemConfigurationException ex)
@@ -62,20 +75,53 @@ namespace NationalInstruments.Examples.CalibrationAudit
             }
         }
 
-        private string ReturnProperty(string Property)
+        public void ReturnInternalCalData(ProductResource productResource)
         {
-            string property;
+                try
+                {
+                    IntLastCalDate = productResource.InternalCalibrationDate.ToString("MM-dd-yyyy");
+                    IntLastCalTemp = productResource.InternalCalibrationTemperature.ToString("0.00");
+                }
+                catch
+                {
+                    IntLastCalDate = "N/A";
+                    IntLastCalTemp = "N/A";
+                }
+        }
 
+        public void ReturnExternalCalData(ProductResource productResource)
+        {
             try
             {
-                property = Property;
+                ExtLastCalDate = productResource.ExternalCalibrationDate.ToString("MM-dd-yyyy");
+
             }
             catch
             {
-                property = "N/A";
+                ExtLastCalDate = "N/A"; 
             }
-            
-            return property;
+
+            try
+            {
+                ExtLastCalTemp = productResource.ExternalCalibrationTemperature.ToString("0.00");
+            }
+            catch
+            {
+                ExtLastCalTemp = "N/A";
+            }
+        }
+
+        public void ReturnTemperatureData(ProductResource productResource)
+        {
+            try
+            {
+                TemperatureSensor[] sensors = productResource.QueryTemperatureSensors(SensorInfo.Reading);
+                Temperature = sensors[0].Reading.ToString("0.00"); //Sensor 0 is the internal temperature
+            }
+            catch
+            {
+                Temperature = "N/A";
+            }
         }
 
         public string UserAlias
