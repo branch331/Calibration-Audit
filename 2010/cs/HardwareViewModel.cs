@@ -3,14 +3,14 @@ using System;
 
 namespace NationalInstruments.Examples.CalibrationAudit
 {
-    class HardwareViewModel
+    class HardwareViewModel // Internal class
     {
         public HardwareViewModel(HardwareResourceBase resource)
         {
             UserAlias = resource.UserAlias;
             NumberOfExperts = resource.Experts.Count;
-            Expert0ResourceName = resource.Experts[0].ResourceName;
-            Expert0ProgrammaticName = resource.Experts[0].ExpertProgrammaticName;
+            ExpertResourceName = resource.Experts[0].ResourceName;
+            ExpertProgrammaticName = resource.Experts[0].ExpertProgrammaticName;
 
             ProductResource productResource = resource as ProductResource;
 
@@ -19,8 +19,8 @@ namespace NationalInstruments.Examples.CalibrationAudit
                 return;
             }
 
-            //Use try catch blocks to detect System Configuration exception
-            //If a value is not supported by the device (returns an exception) then "N/A" is returned
+            // Use try catch blocks to detect System Configuration exception.
+            // If a value is not supported by the device (returns an exception) then "N/A" is returned.
             try
             {
                 Model = productResource.ProductName;
@@ -28,19 +28,19 @@ namespace NationalInstruments.Examples.CalibrationAudit
 
                 if (productResource.SupportsInternalCalibration)
                 {
-                    ReturnInternalCalData(productResource);
+                    ShowInternalCalData(productResource);
                 }
                 else
                 {
-                    IntLastCalDate = "N/A";
-                    IntLastCalTemp = "N/A";
+                    InternalLastCalDate = "N/A";
+                    InternalLastCalTemp = "N/A";
                 }
 
                 if (productResource.SupportsExternalCalibration)
                 {
                     CalibrationOverdue = false;
 
-                    ReturnExternalCalData(productResource);
+                    ShowExternalCalData(productResource);
 
                     try
                     {
@@ -56,12 +56,12 @@ namespace NationalInstruments.Examples.CalibrationAudit
                 }
                 else
                 {
-                    ExtLastCalDate = "N/A";
-                    ExtLastCalTemp = "N/A";
+                    ExternalLastCalDate = "N/A";
+                    ExternalLastCalTemp = "N/A";
                     RecommendedNextCal = "N/A";
                 }
 
-                ReturnTemperatureData(productResource);
+                ShowTemperatureData(productResource);
 
             }
             catch (SystemConfigurationException ex)
@@ -70,47 +70,47 @@ namespace NationalInstruments.Examples.CalibrationAudit
             }
         }
 
-        public void ReturnInternalCalData(ProductResource productResource)
+        public void ShowInternalCalData(ProductResource productResource)
         {
             try
             {
-                IntLastCalDate = productResource.InternalCalibrationDate.ToString("MM-dd-yyyy");
-                IntLastCalTemp = productResource.InternalCalibrationTemperature.ToString("0.00");
+                InternalLastCalDate = productResource.InternalCalibrationDate.ToString("MM-dd-yyyy");
+                InternalLastCalTemp = productResource.InternalCalibrationTemperature.ToString("0.00");
             }
             catch
             {
-                IntLastCalDate = "N/A";
-                IntLastCalTemp = "N/A";
+                InternalLastCalDate = "N/A";
+                InternalLastCalTemp = "N/A";
             }
         }
 
-        public void ReturnExternalCalData(ProductResource productResource)
+        public void ShowExternalCalData(ProductResource productResource)
         {
             try
             {
-                ExtLastCalDate = productResource.ExternalCalibrationDate.ToString("MM-dd-yyyy");
+                ExternalLastCalDate = productResource.ExternalCalibrationDate.ToString("MM-dd-yyyy");
             }
             catch
             {
-                ExtLastCalDate = "N/A";
+                ExternalLastCalDate = "N/A";
             }
 
             try
             {
-                ExtLastCalTemp = productResource.ExternalCalibrationTemperature.ToString("0.00");
+                ExternalLastCalTemp = productResource.ExternalCalibrationTemperature.ToString("0.00");
             }
             catch
             {
-                ExtLastCalTemp = "N/A";
+                ExternalLastCalTemp = "N/A";
             }
         }
 
-        public void ReturnTemperatureData(ProductResource productResource)
+        public void ShowTemperatureData(ProductResource productResource)
         {
             try
             {
                 TemperatureSensor[] sensors = productResource.QueryTemperatureSensors(SensorInfo.Reading);
-                Temperature = sensors[0].Reading.ToString("0.00"); //Sensor 0 is the internal temperature
+                Temperature = sensors[0].Reading.ToString("0.00"); // Sensor 0 is the internal temperature.
             }
             catch
             {
@@ -124,13 +124,13 @@ namespace NationalInstruments.Examples.CalibrationAudit
             private set;
         }
 
-        public string Expert0ResourceName
+        public string ExpertResourceName
         {
             get;
             private set;
         }
 
-        public string Expert0ProgrammaticName
+        public string ExpertProgrammaticName
         {
             get;
             private set;
@@ -148,25 +148,25 @@ namespace NationalInstruments.Examples.CalibrationAudit
             private set;
         }
 
-        public string IntLastCalDate
+        public string InternalLastCalDate
         {
             get;
             private set;
         }
 
-        public string IntLastCalTemp
+        public string InternalLastCalTemp
         {
             get;
             private set;
         }
 
-        public string ExtLastCalDate
+        public string ExternalLastCalDate
         {
             get;
             private set;
         }
 
-        public string ExtLastCalTemp
+        public string ExternalLastCalTemp
         {
             get;
             private set;

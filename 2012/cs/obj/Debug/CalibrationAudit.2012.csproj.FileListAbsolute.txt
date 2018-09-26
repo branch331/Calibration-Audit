@@ -29,7 +29,6 @@ C:\Users\brand\Documents\GitHub\Calibration-Audit\2012\cs\obj\Debug\MainWindow.g
 C:\Users\brand\Documents\GitHub\Calibration-Audit\2012\cs\obj\Debug\App.g.cs
 C:\Users\brand\Documents\GitHub\Calibration-Audit\2012\cs\obj\Debug\GeneratedInternalTypeHelper.g.cs
 C:\Users\brand\Documents\GitHub\Calibration-Audit\2012\cs\obj\Debug\MainWindow.baml
-C:\Users\bnguyen\Documents\GitHub\Calibration-Audit\2012\cs\obj\Debug\CalibrationAudit.2012.csprojResolveAssemblyReference.cache
 C:\Users\bnguyen\Documents\GitHub\Calibration-Audit\2012\cs\obj\Debug\MainWindow.g.cs
 C:\Users\bnguyen\Documents\GitHub\Calibration-Audit\2012\cs\obj\Debug\App.g.cs
 C:\Users\bnguyen\Documents\GitHub\Calibration-Audit\2012\cs\obj\Debug\GeneratedInternalTypeHelper.g.cs
@@ -50,3 +49,4 @@ C:\Users\bnguyen\Documents\GitHub\Calibration-Audit\2012\cs\bin\Debug\NationalIn
 C:\Users\bnguyen\Documents\GitHub\Calibration-Audit\2012\cs\obj\Debug\NationalInstruments.Examples.CalibrationAudit_MarkupCompile.cache
 C:\Users\bnguyen\Documents\GitHub\Calibration-Audit\2012\cs\obj\Debug\NationalInstruments.Examples.CalibrationAudit_MarkupCompile.lref
 C:\Users\bnguyen\Documents\GitHub\Calibration-Audit\2012\cs\obj\Debug\NationalInstruments.Examples.CalibrationAudit.g.resources
+C:\Users\bnguyen\Documents\GitHub\Calibration-Audit\2012\cs\obj\Debug\CalibrationAudit.2012.csprojResolveAssemblyReference.cache

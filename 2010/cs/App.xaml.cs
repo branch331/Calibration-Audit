@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace ShowAllHardware
+namespace NationalInstruments.Examples.CalibrationAudit
 {
     /// <summary>
     /// Interaction logic for App.xaml

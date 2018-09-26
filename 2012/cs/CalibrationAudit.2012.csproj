@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{2B2EE028-217A-4465-A6F5-4B2527DB05AF}</ProjectGuid>
+    <ProjectGuid>{8E40AAAB-F8E2-4744-9968-297FFC90B19C}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NationalInstruments.Examples.CalibrationAudit</RootNamespace>

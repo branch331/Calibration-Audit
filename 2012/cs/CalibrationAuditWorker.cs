@@ -6,7 +6,7 @@ using NationalInstruments.SystemConfiguration;
 
 namespace NationalInstruments.Examples.CalibrationAudit
 {
-    class CalibrationAuditWorker : INotifyPropertyChanged
+    class CalibrationAuditWorker : INotifyPropertyChanged // Internal class
     {
         private bool canBeginRunAudit;
         private List<HardwareViewModel> allHardwareResources;
@@ -51,7 +51,7 @@ namespace NationalInstruments.Examples.CalibrationAudit
                 {
                     return Enumerable.Empty<HardwareViewModel>();
                 }
-                return AllHardwareResources.Where(x => x.NumberOfExperts > 1 || x.Expert0ProgrammaticName != "network");
+                return AllHardwareResources.Where(x => x.NumberOfExperts > 1 || x.ExpertProgrammaticName != "network");
             }
         }
 
@@ -72,40 +72,40 @@ namespace NationalInstruments.Examples.CalibrationAudit
         {
             BackgroundWorker worker = new BackgroundWorker();
             worker.DoWork += new DoWorkEventHandler(delegate(object o, DoWorkEventArgs args)
+            {
+                CanBeginRunAudit = false;
+                try
                 {
-                    CanBeginRunAudit = false;
-                    try
-                    {
-                        // Because the view does not allow modifying resources, there isn't a need to keep
-                        // the raw HardwareResourceBase objects after creating the view models.
-                        AllHardwareResources = null;
-                        var session = new SystemConfiguration.SystemConfiguration(Target, Username, password);
+                    // Because the view does not allow modifying resources, there isn't a need to keep
+                    // the raw HardwareResourceBase objects after creating the view models.
+                    AllHardwareResources = null;
+                    var session = new SystemConfiguration.SystemConfiguration(Target, Username, password);
 
-                        Filter filter = new Filter(session);
-                        filter.IsDevice = true;
-                        filter.SupportsCalibration = true;
-                        filter.IsPresent = IsPresentType.Present;
-                        filter.IsSimulated = false;
+                    Filter filter = new Filter(session);
+                    filter.IsDevice = true;
+                    filter.SupportsCalibration = true;
+                    filter.IsPresent = IsPresentType.Present;
+                    filter.IsSimulated = false;
 
-                        ResourceCollection rawResources = session.FindHardware(filter);
+                    ResourceCollection rawResources = session.FindHardware(filter);
 
-                        AllHardwareResources = rawResources
-                            .Select(x => new HardwareViewModel(x))
-                            .ToList();
-                    }
-                    catch (SystemConfigurationException ex)
+                    AllHardwareResources = rawResources // Return all hardware in the system and the corresponding properties.
+                        .Select(x => new HardwareViewModel(x))
+                        .ToList();
+                }
+                catch (SystemConfigurationException ex)
+                {
+                    if (ex.ErrorCode != ErrorCode.PropertyDoesNotExist) // Do not report error if device does not support self calibration (-2147220623).
                     {
-                        if (ex.ErrorCode != ErrorCode.PropertyDoesNotExist) //Do not report error if device does not support self calibration (-2147220623)
-                        {
-                            string errorMessage = string.Format("Find Hardware threw a System Configuration Exception.\n\nErrorCode: {0:X}\n{1}", ex.ErrorCode, ex.Message);
-                            MessageBox.Show(errorMessage, "System Configuration Exception");
-                        }
-                    }
-                    finally
-                    {
-                        CanBeginRunAudit = true;
+                        string errorMessage = string.Format("Find Hardware threw a System Configuration Exception.\n\nErrorCode: {0:X}\n{1}", ex.ErrorCode, ex.Message);
+                        MessageBox.Show(errorMessage, "System Configuration Exception");
                     }
                 }
+                finally
+                {
+                    CanBeginRunAudit = true;
+                }
+            }
             );
             worker.RunWorkerAsync();
         }
