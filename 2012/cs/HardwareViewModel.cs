@@ -56,7 +56,6 @@ namespace NationalInstruments.Examples.CalibrationAudit
                     RecommendedNextCal = "N/A";
                     Error = ex.ErrorCode.ToString();
                 }
-
             }
             else
             {
