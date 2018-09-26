@@ -25,47 +25,48 @@ namespace NationalInstruments.Examples.CalibrationAudit
             {
                 Model = productResource.ProductName;
                 SerialNumber = productResource.SerialNumber;
-
-                if (productResource.SupportsInternalCalibration)
-                {
-                    ShowInternalCalData(productResource);
-                }
-                else
-                {
-                    InternalLastCalDate = "N/A";
-                    InternalLastCalTemp = "N/A";
-                }
-
-                if (productResource.SupportsExternalCalibration)
-                {
-                    CalibrationOverdue = false;
-                    ShowExternalCalData(productResource);
-
-                    try
-                    {
-                        RecommendedNextCal = productResource.ExternalCalibrationDueDate.ToString("MM-dd-yyyy");
-                        CalibrationOverdue = productResource.ExternalCalibrationDueDate < DateTime.Now;
-                    }
-                    catch
-                    {
-                        RecommendedNextCal = "N/A";
-                    }
-
-                }
-                else
-                {
-                    ExternalLastCalDate = "N/A";
-                    ExternalLastCalTemp = "N/A";
-                    RecommendedNextCal = "N/A";
-                }
-
-                ShowTemperatureData(productResource);
-
             }
             catch (SystemConfigurationException ex)
             {
                 Error = ex.ErrorCode.ToString();
             }
+
+            if (productResource.SupportsInternalCalibration)
+            {
+                ShowInternalCalData(productResource);
+            }
+            else
+            {
+                InternalLastCalDate = "N/A";
+                InternalLastCalTemp = "N/A";
+            }
+
+            if (productResource.SupportsExternalCalibration)
+            {
+                CalibrationOverdue = false;
+                ShowExternalCalData(productResource);
+
+                try
+                {
+                    RecommendedNextCal = productResource.ExternalCalibrationDueDate.ToString("MM-dd-yyyy");
+                    CalibrationOverdue = productResource.ExternalCalibrationDueDate < DateTime.Now;
+                }
+                catch (SystemConfigurationException ex)
+                {
+                    RecommendedNextCal = "N/A";
+                    Error = ex.ErrorCode.ToString();
+                }
+
+            }
+            else
+            {
+                ExternalLastCalDate = "N/A";
+                ExternalLastCalTemp = "N/A";
+                RecommendedNextCal = "N/A";
+            }
+
+            ShowTemperatureData(productResource);
+
         }
 
         public void ShowInternalCalData(ProductResource productResource)
@@ -75,10 +76,11 @@ namespace NationalInstruments.Examples.CalibrationAudit
                 InternalLastCalDate = productResource.InternalCalibrationDate.ToString("MM-dd-yyyy");
                 InternalLastCalTemp = productResource.InternalCalibrationTemperature.ToString("0.00");
             }
-            catch
+            catch (SystemConfigurationException ex)
             {
                 InternalLastCalDate = "N/A";
                 InternalLastCalTemp = "N/A";
+                Error = ex.ErrorCode.ToString();
             }
         }
 
@@ -88,18 +90,20 @@ namespace NationalInstruments.Examples.CalibrationAudit
             {
                 ExternalLastCalDate = productResource.ExternalCalibrationDate.ToString("MM-dd-yyyy");
             }
-            catch
+            catch (SystemConfigurationException ex)
             {
                 ExternalLastCalDate = "N/A";
+                Error = ex.ErrorCode.ToString();
             }
 
             try
             {
                 ExternalLastCalTemp = productResource.ExternalCalibrationTemperature.ToString("0.00");
             }
-            catch
+            catch (SystemConfigurationException ex)
             {
                 ExternalLastCalTemp = "N/A";
+                Error = ex.ErrorCode.ToString();
             }
         }
 
@@ -110,9 +114,10 @@ namespace NationalInstruments.Examples.CalibrationAudit
                 TemperatureSensor[] sensors = productResource.QueryTemperatureSensors(SensorInfo.Reading);
                 Temperature = sensors[0].Reading.ToString("0.00"); // Sensor 0 is the internal temperature.
             }
-            catch
+            catch (SystemConfigurationException ex)
             {
                 Temperature = "N/A";
+                Error = ex.ErrorCode.ToString();
             }
         }
 
