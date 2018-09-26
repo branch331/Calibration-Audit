@@ -67,10 +67,10 @@
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Model" Width="*" Binding="{Binding Model}"/>
                 <DataGridTextColumn Header="Serial Number" Width="*" Binding="{Binding SerialNumber}"/>
-                <DataGridTextColumn Header="Internal Last Cal Date" Width="*" Binding="{Binding IntLastCalDate}"/>
-                <DataGridTextColumn Header="Internal Last Cal Temp (°C)" Width="*" Binding="{Binding IntLastCalTemp}"/>
-                <DataGridTextColumn Header="External Last Cal Date" Width="*" Binding="{Binding ExtLastCalDate}"/>
-                <DataGridTextColumn Header="External Last Cal Temp (°C)" Width="*" Binding="{Binding ExtLastCalTemp}"/>
+                <DataGridTextColumn Header="Internal Last Cal Date" Width="*" Binding="{Binding InternalLastCalDate}"/>
+                <DataGridTextColumn Header="Internal Last Cal Temp (°C)" Width="*" Binding="{Binding InternalLastCalTemp}"/>
+                <DataGridTextColumn Header="External Last Cal Date" Width="*" Binding="{Binding ExternalLastCalDate}"/>
+                <DataGridTextColumn Header="External Last Cal Temp (°C)" Width="*" Binding="{Binding ExternalLastCalTemp}"/>
                 <DataGridTextColumn Header="Recommended Next Cal" Width="*" Binding="{Binding RecommendedNextCal}">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">

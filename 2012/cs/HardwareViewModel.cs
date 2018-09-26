@@ -48,7 +48,7 @@ namespace NationalInstruments.Examples.CalibrationAudit
 
                         CalibrationOverdue = productResource.ExternalCalibrationDueDate < DateTime.Now;
                     }
-                    catch
+                    catch 
                     {
                         RecommendedNextCal = "N/A";
                     }
