@@ -51,9 +51,7 @@ namespace NationalInstruments.Examples.CalibrationAudit
                 {
                     return Enumerable.Empty<HardwareViewModel>();
                 }
-                return from resource in AllHardwareResources
-                       where !(resource.NumberOfExperts == 1 && resource.Expert0ProgrammaticName.Equals("network"))
-                       select resource;
+                return AllHardwareResources.Where(x => x.NumberOfExperts > 1 || x.Expert0ProgrammaticName != "network");
             }
         }
 
@@ -73,8 +71,7 @@ namespace NationalInstruments.Examples.CalibrationAudit
         public void StartRunAudit(string password)
         {
             BackgroundWorker worker = new BackgroundWorker();
-            worker.DoWork += new DoWorkEventHandler(
-                delegate(object o, DoWorkEventArgs args)
+            worker.DoWork += new DoWorkEventHandler(delegate(object o, DoWorkEventArgs args)
                 {
                     CanBeginRunAudit = false;
                     try
@@ -84,21 +81,21 @@ namespace NationalInstruments.Examples.CalibrationAudit
                         AllHardwareResources = null;
                         var session = new SystemConfiguration.SystemConfiguration(Target, Username, password);
 
-                        Filter filter = new Filter(session); 
+                        Filter filter = new Filter(session);
                         filter.IsDevice = true;
                         filter.SupportsCalibration = true;
                         filter.IsPresent = IsPresentType.Present;
-                        filter.IsSimulated = false;   
+                        filter.IsSimulated = false;
 
-                        ResourceCollection rawResources = session.FindHardware(filter); 
+                        ResourceCollection rawResources = session.FindHardware(filter);
 
-                        AllHardwareResources =
-                            (from resource in rawResources 
-                             select new HardwareViewModel(resource)).ToList();
+                        AllHardwareResources = rawResources
+                            .Select(x => new HardwareViewModel(x))
+                            .ToList();
                     }
                     catch (SystemConfigurationException ex)
                     {
-                        if (ex.ErrorCode.ToString() != "-2147220623") //Do not report error if device does not support self calibration (-2147220623)
+                        if (ex.ErrorCode != ErrorCode.PropertyDoesNotExist) //Do not report error if device does not support self calibration (-2147220623)
                         {
                             string errorMessage = string.Format("Find Hardware threw a System Configuration Exception.\n\nErrorCode: {0:X}\n{1}", ex.ErrorCode, ex.Message);
                             MessageBox.Show(errorMessage, "System Configuration Exception");
