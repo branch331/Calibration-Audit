@@ -1,4 +1,5 @@
 ﻿using NationalInstruments.SystemConfiguration;
+using System;
 
 namespace NationalInstruments.Examples.CalibrationAudit
 {
@@ -13,65 +14,59 @@ namespace NationalInstruments.Examples.CalibrationAudit
 
             ProductResource productResource = resource as ProductResource;
 
-
-            if (productResource != null)
+            if (productResource == null)
             {
-                //Use try catch blocks to detect System Configuration exception
-                //If a value is not supported by the device (returns an exception) then "N/A" is returned
-                try
+                return;
+            }
+
+            //Use try catch blocks to detect System Configuration exception
+            //If a value is not supported by the device (returns an exception) then "N/A" is returned
+            try
+            {
+                Model = productResource.ProductName;
+                SerialNumber = productResource.SerialNumber;
+
+                if (productResource.SupportsInternalCalibration)
                 {
-                    Model = productResource.ProductName;
-                    SerialNumber = productResource.SerialNumber;
+                    ReturnInternalCalData(productResource);
+                }
+                else
+                {
+                    IntLastCalDate = "N/A";
+                    IntLastCalTemp = "N/A";
+                }
 
-                    if (productResource.SupportsInternalCalibration)
+                if (productResource.SupportsExternalCalibration)
+                {
+                    CalibrationOverdue = false;
+
+                    ReturnExternalCalData(productResource);
+
+                    try
                     {
-                        ReturnInternalCalData(productResource);
+                        RecommendedNextCal = productResource.ExternalCalibrationDueDate.ToString("MM-dd-yyyy");
+
+                        CalibrationOverdue = productResource.ExternalCalibrationDueDate < DateTime.Now;
                     }
-                    else
+                    catch
                     {
-                        IntLastCalDate = "N/A";
-                        IntLastCalTemp = "N/A";
-                    }
-
-                    if (productResource.SupportsExternalCalibration)
-                    {
-                        CalibrationOverdue = false;
-
-                        ReturnExternalCalData(productResource);
-
-                        try
-                        {
-                            RecommendedNextCal = productResource.ExternalCalibrationDueDate.ToString("MM-dd-yyyy");
-
-                            if (System.DateTime.Compare(productResource.ExternalCalibrationDueDate, System.DateTime.Now) < 0)
-                            {
-                                CalibrationOverdue = true;
-                            }
-                            else
-                            {
-                                CalibrationOverdue = false;
-                            }
-                        }
-                        catch
-                        {
-                            RecommendedNextCal = "N/A";
-                        }
-
-                    }
-                    else
-                    {
-                        ExtLastCalDate = "N/A";
-                        ExtLastCalTemp = "N/A";
                         RecommendedNextCal = "N/A";
                     }
 
-                    ReturnTemperatureData(productResource);
-
                 }
-                catch (SystemConfigurationException ex)
+                else
                 {
-                    Error = ex.ErrorCode.ToString();
+                    ExtLastCalDate = "N/A";
+                    ExtLastCalTemp = "N/A";
+                    RecommendedNextCal = "N/A";
                 }
+
+                ReturnTemperatureData(productResource);
+
+            }
+            catch (SystemConfigurationException ex)
+            {
+                Error = ex.ErrorCode.ToString();
             }
         }
 
@@ -94,7 +89,6 @@ namespace NationalInstruments.Examples.CalibrationAudit
             try
             {
                 ExtLastCalDate = productResource.ExternalCalibrationDate.ToString("MM-dd-yyyy");
-
             }
             catch
             {

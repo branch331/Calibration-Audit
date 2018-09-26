@@ -18,6 +18,5 @@ namespace NationalInstruments.Examples.CalibrationAudit
         {
             worker.StartRunAudit(passwordBox.Password);
         }
-
     }
 }

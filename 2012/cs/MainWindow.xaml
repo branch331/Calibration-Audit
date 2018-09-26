@@ -68,9 +68,9 @@
                 <DataGridTextColumn Header="Model" Width="*" Binding="{Binding Model}"/>
                 <DataGridTextColumn Header="Serial Number" Width="*" Binding="{Binding SerialNumber}"/>
                 <DataGridTextColumn Header="Internal Last Cal Date" Width="*" Binding="{Binding IntLastCalDate}"/>
-                <DataGridTextColumn Header="Internal Last Cal Temp (C)" Width="*" Binding="{Binding IntLastCalTemp}"/>
+                <DataGridTextColumn Header="Internal Last Cal Temp (°C)" Width="*" Binding="{Binding IntLastCalTemp}"/>
                 <DataGridTextColumn Header="External Last Cal Date" Width="*" Binding="{Binding ExtLastCalDate}"/>
-                <DataGridTextColumn Header="External Last Cal Temp (C)" Width="*" Binding="{Binding ExtLastCalTemp}"/>
+                <DataGridTextColumn Header="External Last Cal Temp (°C)" Width="*" Binding="{Binding ExtLastCalTemp}"/>
                 <DataGridTextColumn Header="Recommended Next Cal" Width="*" Binding="{Binding RecommendedNextCal}">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
@@ -83,7 +83,7 @@
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Current Temperature (C)" Width="*" Binding="{Binding Temperature}"/>
+                <DataGridTextColumn Header="Current Temperature (°C)" Width="*" Binding="{Binding Temperature}"/>
                 <DataGridTextColumn Header="Error" Width="*" Binding="{Binding Error}"/>
             </DataGrid.Columns>
         </DataGrid>
