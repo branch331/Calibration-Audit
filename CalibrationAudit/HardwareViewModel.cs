@@ -3,37 +3,21 @@ using System;
 
 namespace NationalInstruments.Examples.CalibrationAudit
 {
-    class HardwareViewModel // Internal class
+    internal class HardwareViewModel 
     {
-        public HardwareViewModel(HardwareResourceBase resource)
+        public HardwareViewModel(ProductResource resource)
         {
             UserAlias = resource.UserAlias;
             NumberOfExperts = resource.Experts.Count;
             ExpertResourceName = resource.Experts[0].ResourceName;
             ExpertProgrammaticName = resource.Experts[0].ExpertProgrammaticName;
 
-            ProductResource productResource = resource as ProductResource;
+            Model = resource.ProductName;
+            SerialNumber = resource.SerialNumber;
 
-            if (productResource == null)
+            if (resource.SupportsInternalCalibration)
             {
-                return;
-            }
-
-            // Use try catch blocks to detect System Configuration exception.
-            // If a value is not supported by the device (returns an exception) then "N/A" is returned.
-            try
-            {
-                Model = productResource.ProductName;
-                SerialNumber = productResource.SerialNumber;
-            }
-            catch (SystemConfigurationException ex)
-            {
-                Error = ex.ErrorCode.ToString();
-            }
-
-            if (productResource.SupportsInternalCalibration)
-            {
-                ShowInternalCalData(productResource);
+                ShowInternalCalData(resource);
             }
             else
             {
@@ -41,21 +25,10 @@ namespace NationalInstruments.Examples.CalibrationAudit
                 InternalLastCalTemp = "N/A";
             }
 
-            if (productResource.SupportsExternalCalibration)
+            if (resource.SupportsExternalCalibration)
             {
-                CalibrationOverdue = false;
-                ShowExternalCalData(productResource);
 
-                try
-                {
-                    RecommendedNextCal = productResource.ExternalCalibrationDueDate.ToString("MM-dd-yyyy");
-                    CalibrationOverdue = productResource.ExternalCalibrationDueDate < DateTime.Now;
-                }
-                catch (SystemConfigurationException ex)
-                {
-                    RecommendedNextCal = "N/A";
-                    Error = ex.ErrorCode.ToString();
-                }
+                ShowExternalCalData(resource);
             }
             else
             {
@@ -64,30 +37,34 @@ namespace NationalInstruments.Examples.CalibrationAudit
                 RecommendedNextCal = "N/A";
             }
 
-            ShowTemperatureData(productResource);
-
+            ShowTemperatureData(resource);
         }
 
-        public void ShowInternalCalData(ProductResource productResource)
+        // Helper functions use try catch blocks to detect System Configuration exceptions.
+        // If a value is not supported by the device (returns an exception) then "N/A" is returned.
+
+        public void ShowInternalCalData(ProductResource resource)
         {
             try
             {
-                InternalLastCalDate = productResource.InternalCalibrationDate.ToString("MM-dd-yyyy");
-                InternalLastCalTemp = productResource.InternalCalibrationTemperature.ToString("0.00");
+                InternalLastCalDate = resource.InternalCalibrationDate.ToString("MM-dd-yyyy");
+                InternalLastCalTemp = resource.InternalCalibrationTemperature.ToString("0.00");
             }
-            catch (Exception ex)
+            catch (SystemConfigurationException ex)
             {
                 InternalLastCalDate = "N/A";
                 InternalLastCalTemp = "N/A";
-                Error = ex.ToString();
+                Error = ex.ErrorCode.ToString();
             }
         }
 
-        public void ShowExternalCalData(ProductResource productResource)
+        public void ShowExternalCalData(ProductResource resource)
         {
+            CalibrationOverdue = false;
+
             try
             {
-                ExternalLastCalDate = productResource.ExternalCalibrationDate.ToString("MM-dd-yyyy");
+                ExternalLastCalDate = resource.ExternalCalibrationDate.ToString("MM-dd-yyyy");
             }
             catch (SystemConfigurationException ex)
             {
@@ -97,13 +74,24 @@ namespace NationalInstruments.Examples.CalibrationAudit
 
             try
             {
-                ExternalLastCalTemp = productResource.ExternalCalibrationTemperature.ToString("0.00");
+                ExternalLastCalTemp = resource.ExternalCalibrationTemperature.ToString("0.00");
             }
             catch (SystemConfigurationException ex)
             {
                 ExternalLastCalTemp = "N/A";
                 Error = ex.ErrorCode.ToString();
             }
+            try
+            {
+                RecommendedNextCal = resource.ExternalCalibrationDueDate.ToString("MM-dd-yyyy");
+                CalibrationOverdue = resource.ExternalCalibrationDueDate < DateTime.Now;
+            }
+            catch (SystemConfigurationException ex)
+            {
+                RecommendedNextCal = "N/A";
+                Error = ex.ErrorCode.ToString();
+            }
+
         }
 
         public void ShowTemperatureData(ProductResource productResource)
