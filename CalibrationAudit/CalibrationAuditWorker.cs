@@ -8,6 +8,9 @@ namespace NationalInstruments.Examples.CalibrationAudit
 {
     internal class CalibrationAuditWorker : INotifyPropertyChanged
     {
+        /// <summary>
+        /// Creates a background worker in the StartRunAudit method to identify all devices in the system and display calibration data.
+        /// </summary>
         private bool canBeginRunAudit;
         private List<HardwareViewModel> allHardwareResources;
 
