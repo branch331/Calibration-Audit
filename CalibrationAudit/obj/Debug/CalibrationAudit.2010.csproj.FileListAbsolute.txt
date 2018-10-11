@@ -1,3 +1,0 @@
-C:\Users\bnguyen\Documents\GitHub\Calibration-Audit\CalibrationAudit\bin\Debug\NationalInstruments.Examples.CalibrationAudit.exe.config
-C:\Users\bnguyen\Documents\GitHub\Calibration-Audit\CalibrationAudit\obj\Debug\NationalInstruments.Examples.CalibrationAudit.exe
-C:\Users\bnguyen\Documents\GitHub\Calibration-Audit\CalibrationAudit\obj\Debug\NationalInstruments.Examples.CalibrationAudit.pdb
