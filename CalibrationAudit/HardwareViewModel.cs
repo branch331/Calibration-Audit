@@ -3,7 +3,7 @@ using NationalInstruments.SystemConfiguration;
 
 namespace NationalInstruments.Examples.CalibrationAudit
 {
-    internal class HardwareViewModel 
+    internal class HardwareViewModel
     {
         /// <summary>
         /// Class for each device in the system that contains internal and external calibration data, and temperature.

@@ -1,9 +1,9 @@
 Calibration Audit Example
 
-Overview: 
+Overview:
 Obtains calibration information for the hardware on a selected target. The target can be left empty for localhost.
 
-Requirements: 
+Requirements:
 NI System Configuration, applicable device drivers
 
 Instructions:
