@@ -5,14 +5,14 @@ namespace NationalInstruments.Examples.CalibrationAudit
 {
     public partial class MainWindow : Window
     {
+        private CalibrationAuditWorker worker;
+
         public MainWindow()
         {
             InitializeComponent();
             worker = new CalibrationAuditWorker();
             mainGrid.DataContext = worker;
         }
-
-        private CalibrationAuditWorker worker;
 
         private void OnRunAuditClick(object sender, RoutedEventArgs e)
         {

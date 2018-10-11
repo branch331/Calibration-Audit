@@ -1,17 +1,18 @@
-﻿using NationalInstruments.SystemConfiguration;
-using System;
+﻿using System;
+using NationalInstruments.SystemConfiguration;
 
 namespace NationalInstruments.Examples.CalibrationAudit
 {
     internal class HardwareViewModel 
     {
+        private string notAvailableConstant = "N/A";
+
         public HardwareViewModel(ProductResource resource)
         {
             UserAlias = resource.UserAlias;
             NumberOfExperts = resource.Experts.Count;
             ExpertResourceName = resource.Experts[0].ResourceName;
             ExpertProgrammaticName = resource.Experts[0].ExpertProgrammaticName;
-
             Model = resource.ProductName;
             SerialNumber = resource.SerialNumber;
 
@@ -21,20 +22,19 @@ namespace NationalInstruments.Examples.CalibrationAudit
             }
             else
             {
-                InternalLastCalDate = "N/A";
-                InternalLastCalTemp = "N/A";
+                InternalLastCalDate = notAvailableConstant;
+                InternalLastCalTemp = notAvailableConstant;
             }
 
             if (resource.SupportsExternalCalibration)
             {
-
                 ShowExternalCalData(resource);
             }
             else
             {
-                ExternalLastCalDate = "N/A";
-                ExternalLastCalTemp = "N/A";
-                RecommendedNextCal = "N/A";
+                ExternalLastCalDate = notAvailableConstant;
+                ExternalLastCalTemp = notAvailableConstant;
+                RecommendedNextCal = notAvailableConstant;
             }
 
             ShowTemperatureData(resource);
@@ -47,13 +47,13 @@ namespace NationalInstruments.Examples.CalibrationAudit
         {
             try
             {
-                InternalLastCalDate = resource.InternalCalibrationDate.ToString("MM-dd-yyyy");
+                InternalLastCalDate = resource.InternalCalibrationDate.ToString("MM-yyyy");
                 InternalLastCalTemp = resource.InternalCalibrationTemperature.ToString("0.00");
             }
             catch (SystemConfigurationException ex)
             {
-                InternalLastCalDate = "N/A";
-                InternalLastCalTemp = "N/A";
+                InternalLastCalDate = notAvailableConstant;
+                InternalLastCalTemp = notAvailableConstant;
                 Error = ex.ErrorCode.ToString();
             }
         }
@@ -64,11 +64,11 @@ namespace NationalInstruments.Examples.CalibrationAudit
 
             try
             {
-                ExternalLastCalDate = resource.ExternalCalibrationDate.ToString("MM-dd-yyyy");
+                ExternalLastCalDate = resource.ExternalCalibrationDate.ToString("MM-yyyy");
             }
             catch (SystemConfigurationException ex)
             {
-                ExternalLastCalDate = "N/A";
+                ExternalLastCalDate = notAvailableConstant;
                 Error = ex.ErrorCode.ToString();
             }
 
@@ -78,20 +78,19 @@ namespace NationalInstruments.Examples.CalibrationAudit
             }
             catch (SystemConfigurationException ex)
             {
-                ExternalLastCalTemp = "N/A";
+                ExternalLastCalTemp = notAvailableConstant;
                 Error = ex.ErrorCode.ToString();
             }
             try
             {
-                RecommendedNextCal = resource.ExternalCalibrationDueDate.ToString("MM-dd-yyyy");
+                RecommendedNextCal = resource.ExternalCalibrationDueDate.ToString("MM-yyyy");
                 CalibrationOverdue = resource.ExternalCalibrationDueDate < DateTime.Now;
             }
             catch (SystemConfigurationException ex)
             {
-                RecommendedNextCal = "N/A";
+                RecommendedNextCal = notAvailableConstant;
                 Error = ex.ErrorCode.ToString();
             }
-
         }
 
         public void ShowTemperatureData(ProductResource productResource)
@@ -103,7 +102,7 @@ namespace NationalInstruments.Examples.CalibrationAudit
             }
             catch (SystemConfigurationException ex)
             {
-                Temperature = "N/A";
+                Temperature = notAvailableConstant;
                 Error = ex.ErrorCode.ToString();
             }
         }
