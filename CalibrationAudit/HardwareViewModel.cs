@@ -6,7 +6,7 @@ namespace NationalInstruments.Examples.CalibrationAudit
     internal class HardwareViewModel
     {
         /// <summary>
-        /// Class for each device in the system that contains internal and external calibration data, and temperature.
+        /// Class for each device in the system that contains internal and external calibration data and temperature.
         /// </summary>
         private string notAvailableConstant = "N/A";
 
