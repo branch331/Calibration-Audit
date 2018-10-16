@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using NationalInstruments.SystemConfiguration;
 
 namespace NationalInstruments.Examples.CalibrationAudit
@@ -8,7 +9,7 @@ namespace NationalInstruments.Examples.CalibrationAudit
         /// <summary>
         /// Class for each device in the system that contains internal and external calibration data and temperature.
         /// </summary>
-        private string notAvailableConstant = "N/A";
+        private const string notAvailableConstant = "N/A";
 
         public HardwareViewModel(ProductResource resource)
         {
@@ -101,9 +102,11 @@ namespace NationalInstruments.Examples.CalibrationAudit
             try
             {
                 TemperatureSensor[] sensors = productResource.QueryTemperatureSensors(SensorInfo.Reading);
-                Temperature = sensors[0].Reading.ToString("0.00"); // Sensor 0 is the internal temperature.
+
+                Temperature = string.Join(", ", sensors
+                    .Select(s => s.Reading.ToString("0.00")));
             }
-            catch (SystemConfigurationException ex)
+            catch (SystemConfigurationException ex) // If device does not have internal temperature sensor(s), display temperature as "N/A".
             {
                 Temperature = notAvailableConstant;
                 Error = ex.ErrorCode.ToString();

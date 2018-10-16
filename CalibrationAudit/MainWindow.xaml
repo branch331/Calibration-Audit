@@ -83,10 +83,9 @@
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Current Temp (°C)" Width="70" Binding="{Binding Temperature}"/>
+                <DataGridTextColumn Header="Current Temp(s) (°C)" Width="75" Binding="{Binding Temperature}"/>
                 <DataGridTextColumn Header="Error" Width="*" Binding="{Binding Error}"/>
             </DataGrid.Columns>
         </DataGrid>
-
     </Grid>
 </Window>
