@@ -57,7 +57,7 @@
                 </Style>
             </DataGrid.ColumnHeaderStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Device" Width="90">
+                <DataGridTextColumn Header="Device" Width="80">
                     <DataGridTextColumn.Binding>
                         <MultiBinding Converter="{StaticResource AliasConverter}">
                             <Binding Path="UserAlias"/>
@@ -83,7 +83,7 @@
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Current Temp(s) (°C)" Width="75" Binding="{Binding Temperature}"/>
+                <DataGridTextColumn Header="Current Temp(s) (°C)" Width="120" Binding="{Binding Temperature}"/>
                 <DataGridTextColumn Header="Error" Width="*" Binding="{Binding Error}"/>
             </DataGrid.Columns>
         </DataGrid>
